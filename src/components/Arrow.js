@@ -5,12 +5,12 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
-    animation: `$arrowShoot 1s linear 1 forwards`,
+    animation: `$arrowShoot linear 1 forwards`,
+    animationDuration: (props) => `${props.timeTilTarget}ms`,
     animationPlayState: (props) => props.animationPlayState,
   },
   "@keyframes arrowShoot": {
     "0%": { transform: "translateX(0%)" },
-    // "100%": { transform: "translateX(100%)" },
     "100%": { transform: "translateX(calc(100% - 80px))" },
   },
   arrowSVG: {
@@ -23,6 +23,7 @@ const useStyles = makeStyles({
 function ArrowComp(props) {
   const classes = useStyles(props);
   console.log(props, "props in arrow comp");
+  console.log(typeof props.timeTilTarget, "type of time til target");
   return (
     <Grid container item xs={12} className={classes.root}>
       <ArrowRightAlt className={classes.arrowSVG} />
