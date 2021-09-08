@@ -7,7 +7,7 @@ function App() {
     <Container maxWidth="md">
       <div className="App">
         <Typography variant="h3" color="primary" className="title">
-          Bow Speed Simulator
+          Archery Speed
         </Typography>
         <BowDemo />
       </div>
