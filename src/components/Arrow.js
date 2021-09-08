@@ -11,6 +11,7 @@ const useStyles = makeStyles({
   },
   "@keyframes arrowShoot": {
     "0%": { transform: "translateX(0%)" },
+    //width of 80px include in calculation 100% - 80px places the arrow at the end of the parent div after animation and translateX
     "100%": { transform: "translateX(calc(100% - 80px))" },
   },
   arrowSVG: {
@@ -22,8 +23,6 @@ const useStyles = makeStyles({
 
 function ArrowComp(props) {
   const classes = useStyles(props);
-  console.log(props, "props in arrow comp");
-  console.log(typeof props.timeTilTarget, "type of time til target");
   return (
     <Grid container item xs={12} className={classes.root}>
       <ArrowRightAlt className={classes.arrowSVG} />
@@ -32,6 +31,5 @@ function ArrowComp(props) {
 }
 
 export const Arrow = (mainProps) => {
-  console.log(mainProps, "props in main comp");
   return <ArrowComp {...mainProps} />;
 };
