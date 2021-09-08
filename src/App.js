@@ -1,12 +1,14 @@
 import "./App.css";
-import { Container } from "@material-ui/core";
+import { Container, Typography } from "@material-ui/core";
 import { BowDemo } from "./components/BowDemo";
 
 function App() {
   return (
     <Container maxWidth="md">
       <div className="App">
-        <h1>Traditional Archery</h1>
+        <Typography variant="h3" color="primary" className="title">
+          Bow Speed Simulator
+        </Typography>
         <BowDemo />
       </div>
     </Container>
