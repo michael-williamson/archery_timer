@@ -27,6 +27,7 @@ export const BowDemo = () => {
   const [timeTilTarget, setTimeTilTarget] = useState(120);
   const [distanceTilTarget, setDistanceTilTarget] = useState(20);
   const [resultsModalOpen, setResultsModalOpen] = useState(false);
+  const [btnDisabled, setBtnDisabled] = useState(false);
 
   const useStyles = makeStyles((theme) => ({
     muiOutlinedInput: {
@@ -51,6 +52,7 @@ export const BowDemo = () => {
       backgroundColor: theme.palette.secondary.main,
       padding: "0.2rem 2.25rem",
       borderRadius: 11,
+      fontWeight: "bold",
     },
     muiCounter: {
       backgroundColor: "black",
@@ -68,6 +70,7 @@ export const BowDemo = () => {
       setShowCounter(false);
       setCounter(3);
       setDrawing("Countdown Sequence");
+      setBtnDisabled(false);
     }
   }, [resultsModalOpen]);
 
@@ -85,7 +88,6 @@ export const BowDemo = () => {
       setTimeout(() => {
         setResultsModalOpen(true);
         applauseAudio.play();
-        //returns arrow back to initial position
       }, timeTilTarget + 2000);
     }
     counter > 0 &&
@@ -98,7 +100,7 @@ export const BowDemo = () => {
     const timeTilTargetCalculator = (fps, distance) => {
       let val = (distance * 3) / fps;
       val = val * 1000;
-      val = val.toFixed();
+      val = parseInt(val.toFixed());
       setTimeTilTarget(val);
     };
 
@@ -106,11 +108,13 @@ export const BowDemo = () => {
       ? timeTilTargetCalculator(event.target.value, distanceTilTarget)
       : timeTilTargetCalculator(feetPerSecond, event.target.value);
     "fps" === prop
-      ? setFeetPerSecond(event.target.value)
-      : setDistanceTilTarget(event.target.value);
+      ? setFeetPerSecond(parseInt(event.target.value))
+      : setDistanceTilTarget(parseInt(event.target.value));
   };
 
   const archeryDrawSequence = () => {
+    //disable button to prevent excess function calls that might complicate sequence
+    setBtnDisabled(true);
     // created audio objects for each sound
     const bowDrawAudio = new Audio(bowDrawAudioURL);
     //play drawing of the bow
@@ -140,6 +144,7 @@ export const BowDemo = () => {
           <OutlinedInput
             classes={{ root: classes.muiOutlinedInput }}
             value={feetPerSecond}
+            type="number"
             error={minMaxValidationFn(50, 500, feetPerSecond)}
             onChange={handleChange("fps")}
             // aria-describedby="standard-speed-helper-text"
@@ -167,6 +172,7 @@ export const BowDemo = () => {
           <OutlinedInput
             classes={{ root: classes.muiOutlinedInput }}
             value={distanceTilTarget}
+            type="number"
             error={minMaxValidationFn(10, 300, distanceTilTarget)}
             onChange={handleChange("yards")}
             endAdornment={<InputAdornment position="end">yards</InputAdornment>}
@@ -200,8 +206,10 @@ export const BowDemo = () => {
         <Grid item xs={12}>
           <Button
             onClick={() => archeryDrawSequence()}
+            disabled={btnDisabled}
             variant="contained"
             color="primary"
+            size="large"
             startIcon={<TrackChanges fontSize="large" color="secondary" />}
           >
             Click to Draw Bow
