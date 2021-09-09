@@ -18,17 +18,17 @@ import arrowImpactURL from "../media/arrow_impact.mp3";
 import applauseURL from "../media/applause.mp3";
 
 export const BowDemo = () => {
-  const [drawing, setDrawing] = useState("Arrow not Drawn");
+  const [drawing, setDrawing] = useState("Countdown Sequence");
   const [showCounter, setShowCounter] = useState(false);
   const [counter, setCounter] = useState(3);
   const [animationPlayState, setAnimationPlayState] = useState("paused");
+  const [animationFillMode, setAnimationFillMode] = useState("forwards");
   const [feetPerSecond, setFeetPerSecond] = useState(170);
   const [timeTilTarget, setTimeTilTarget] = useState(120);
   const [distanceTilTarget, setDistanceTilTarget] = useState(20);
   const [resultsModalOpen, setResultsModalOpen] = useState(false);
 
   const useStyles = makeStyles((theme) => ({
-    root: {},
     muiOutlinedInput: {
       background: theme.palette.secondary.main,
       fontSize: "1.25rem",
@@ -62,9 +62,21 @@ export const BowDemo = () => {
   const classes = useStyles();
 
   useEffect(() => {
+    if (resultsModalOpen) {
+      //setting state back to default
+      setAnimationFillMode("initial");
+      setShowCounter(false);
+      setCounter(3);
+      setDrawing("Countdown Sequence");
+    }
+  }, [resultsModalOpen]);
+
+  useEffect(() => {
     const arrowImpactAudio = new Audio(arrowImpactURL);
     const applauseAudio = new Audio(applauseURL);
     if (!counter) {
+      //before animation runs make sure animation will leave arrow in target
+      setAnimationFillMode("forwards");
       setAnimationPlayState("running");
       setTimeout(() => {
         arrowImpactAudio.play();
@@ -73,6 +85,7 @@ export const BowDemo = () => {
       setTimeout(() => {
         setResultsModalOpen(true);
         applauseAudio.play();
+        //returns arrow back to initial position
       }, timeTilTarget + 2000);
     }
     counter > 0 &&
@@ -196,8 +209,8 @@ export const BowDemo = () => {
         </Grid>
         <Grid item xs={8}>
           <Typography
-            variant="h4"
-            component="h4"
+            variant="h6"
+            component="h6"
             color="primary"
             classes={{ root: classes.muiCountdownText }}
           >
@@ -221,7 +234,7 @@ export const BowDemo = () => {
               color="primary"
               classes={{ root: classes.muiCounter }}
             >
-              {" ..."}
+              {"..."}
             </Typography>
           )}
         </Grid>
@@ -229,6 +242,7 @@ export const BowDemo = () => {
       <Grid container item xs={12}>
         <Arrow
           animationPlayState={animationPlayState}
+          animationFillMode={animationFillMode}
           timeTilTarget={timeTilTarget}
         />
       </Grid>
