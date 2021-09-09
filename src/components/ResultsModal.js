@@ -17,6 +17,15 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  h1: {
+    textDecoration: "underline",
+    textAlign: "center",
+  },
+  span: {
+    color: "#8dda20",
+    fontSize: "3rem",
+    marginLeft: ".75rem",
+  },
 }));
 
 export const ResultsModal = (props) => {
@@ -38,12 +47,23 @@ export const ResultsModal = (props) => {
       >
         <Fade in={props.resultsModalOpen}>
           <div className={classes.paper}>
+            <h1 className={classes.h1}>Arrow Speed Stats</h1>
             <h2 id="transition-modal-title">
-              Feet Per Second: {props.feetPerSecond}
+              Velocity:{" "}
+              <span className={classes.span}>{props.feetPerSecond} fps</span>
             </h2>
-            <h2>Distance in Yards: {props.distanceTilTarget}</h2>
+            <h2>
+              Distance:{" "}
+              <span className={classes.span}>
+                {props.distanceTilTarget} yards
+              </span>
+            </h2>
             <h2 id="transition-modal-description">
-              It takes {props.timeTilTarget} milliseconds to reach the target.
+              It takes{" "}
+              <span className={classes.span}>
+                {props.timeTilTarget} milliseconds
+              </span>{" "}
+              to reach the target.
             </h2>
           </div>
         </Fade>
