@@ -59,6 +59,22 @@ export const BowDemo = () => {
       padding: "0.2rem 2.25rem",
       borderRadius: 11,
     },
+    muiArrowContainer: {
+      backgroundColor: "#fffcf970",
+      height: 200,
+      position: "relative",
+    },
+    target: {
+      width: 200,
+      height: 150,
+      borderRadius: "50%",
+      background: "radial-gradient(#ee0000, white)",
+      transform: "rotateY( 70deg)",
+      position: "absolute",
+      top: 0,
+      right: -30,
+      marginTop: 20,
+    },
   }));
 
   const classes = useStyles();
@@ -247,12 +263,19 @@ export const BowDemo = () => {
           )}
         </Grid>
       </Grid>
-      <Grid container item xs={12}>
+      <Grid
+        container
+        item
+        xs={12}
+        classes={{ root: classes.muiArrowContainer }}
+        alignContent="center"
+      >
         <Arrow
           animationPlayState={animationPlayState}
           animationFillMode={animationFillMode}
           timeTilTarget={timeTilTarget}
         />
+        <div className={classes.target}></div>
       </Grid>
       <Grid container item xs={12}>
         <ResultsModal
