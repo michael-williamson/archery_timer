@@ -5,7 +5,8 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
-    animation: `$arrowShoot linear 1 forwards`,
+    animation: `$arrowShoot linear 1`,
+    animationFillMode: (props) => props.animationFillMode,
     animationDuration: (props) => `${props.timeTilTarget}ms`,
     animationPlayState: (props) => props.animationPlayState,
   },
