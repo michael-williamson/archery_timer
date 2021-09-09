@@ -5,10 +5,12 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
-    animation: `$arrowShoot linear 1`,
-    animationFillMode: (props) => props.animationFillMode,
+    animationName: `$arrowShoot`,
+    animationFillMode: "forwards",
     animationDuration: (props) => `${props.timeTilTarget}ms`,
     animationPlayState: (props) => props.animationPlayState,
+    animationTimingFunction: "linear",
+    animationIterationCount: 1,
     height: 150,
     zIndex: 1111,
   },
@@ -27,7 +29,13 @@ const useStyles = makeStyles({
 function ArrowComp(props) {
   const classes = useStyles(props);
   return (
-    <Grid container item xs={12} className={classes.root} alignContent="center">
+    <Grid
+      container
+      item
+      xs={12}
+      className={props.cycleAnimationClass ? null : classes.root}
+      alignContent="center"
+    >
       <ArrowRightAlt className={classes.arrowSVG} />
     </Grid>
   );

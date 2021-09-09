@@ -22,7 +22,7 @@ export const BowDemo = () => {
   const [showCounter, setShowCounter] = useState(false);
   const [counter, setCounter] = useState(3);
   const [animationPlayState, setAnimationPlayState] = useState("paused");
-  const [animationFillMode, setAnimationFillMode] = useState("forwards");
+  const [cycleAnimationClass, setCycleAnimationClass] = useState(false);
   const [feetPerSecond, setFeetPerSecond] = useState(170);
   const [timeTilTarget, setTimeTilTarget] = useState(120);
   const [distanceTilTarget, setDistanceTilTarget] = useState(20);
@@ -82,7 +82,7 @@ export const BowDemo = () => {
   useEffect(() => {
     if (resultsModalOpen) {
       //setting state back to default
-      setAnimationFillMode("initial");
+      setAnimationPlayState("paused");
       setShowCounter(false);
       setCounter(3);
       setDrawing("Countdown Sequence");
@@ -91,26 +91,31 @@ export const BowDemo = () => {
   }, [resultsModalOpen]);
 
   useEffect(() => {
+    cycleAnimationClass && setCycleAnimationClass(false);
+  }, [cycleAnimationClass]);
+
+  useEffect(() => {
     const arrowImpactAudio = new Audio(arrowImpactURL);
     const applauseAudio = new Audio(applauseURL);
     if (!counter) {
-      //before animation runs make sure animation will leave arrow in target
-      setAnimationFillMode("forwards");
-      setAnimationPlayState("running");
       setTimeout(() => {
         arrowImpactAudio.play();
       }, timeTilTarget);
+      //before animation runs make sure animation will leave arrow in target
+      setAnimationPlayState("running");
       setDrawing("Released");
+
       setTimeout(() => {
         setResultsModalOpen(true);
         applauseAudio.play();
+        !cycleAnimationClass && setCycleAnimationClass(true);
       }, timeTilTarget + 2000);
     }
     counter > 0 &&
       showCounter &&
       setTimeout(() => setCounter(counter - 1), 1000) &&
       setDrawing("Releasing in");
-  }, [counter, showCounter, timeTilTarget]);
+  }, [counter, showCounter, timeTilTarget, cycleAnimationClass]);
 
   const handleChange = (prop) => (event) => {
     const timeTilTargetCalculator = (fps, distance) => {
@@ -272,7 +277,7 @@ export const BowDemo = () => {
       >
         <Arrow
           animationPlayState={animationPlayState}
-          animationFillMode={animationFillMode}
+          cycleAnimationClass={cycleAnimationClass}
           timeTilTarget={timeTilTarget}
         />
         <div className={classes.target}></div>
