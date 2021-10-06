@@ -7,6 +7,7 @@ const theme = createTheme({
     primary: {
       //darkolivegreen
       main: "#556b2f",
+      light: "#8dda20",
       //blanchedalmond
       contrastText: "#ffcc7f",
     },
@@ -22,7 +23,11 @@ const theme = createTheme({
     },
     background: {
       default: "#fff",
+      paper: "#ebfbebcf",
     },
+  },
+  excessColors: {
+    blueish: "#182770ab",
   },
   overrides: {},
 });

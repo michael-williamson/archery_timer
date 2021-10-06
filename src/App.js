@@ -1,14 +1,20 @@
 import "./App.css";
-import { Container, Typography } from "@material-ui/core";
+import { Container, Box } from "@material-ui/core";
 import { BowDemo } from "./components/BowDemo";
+import { Speed } from "@material-ui/icons";
 
 function App() {
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" disableGutters={true}>
       <div className="App">
-        <Typography variant="h3" color="primary" className="title">
-          Archery Speed
-        </Typography>
+        <div className="title">
+          <Box fontSize={50} color="secondary.main">
+            Archery Speed
+          </Box>
+          <Box mt={2}>
+            <Speed fontSize="large" color="secondary" />
+          </Box>
+        </div>
         <BowDemo />
       </div>
     </Container>
