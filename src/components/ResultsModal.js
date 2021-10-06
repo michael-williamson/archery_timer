@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
+import { Box, Grid } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -11,20 +12,17 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   paper: {
-    backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.primary.main,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-  h1: {
-    textDecoration: "underline",
-    textAlign: "center",
+    backgroundColor: "#000000f2",
+    // color: theme.palette.primary.main,
+    // border: "2px solid #000",
+    // boxShadow: theme.shadows[5],
+    // padding: theme.spacing(2, 4, 3),
+    width: "100%",
   },
   span: {
-    color: "#8dda20",
-    fontSize: "3rem",
-    marginLeft: ".75rem",
+    // color: "#8dda20",
+    // fontSize: "3rem",
+    // marginLeft: ".75rem",
   },
 }));
 
@@ -46,26 +44,81 @@ export const ResultsModal = (props) => {
         }}
       >
         <Fade in={props.resultsModalOpen}>
-          <div className={classes.paper}>
-            <h1 className={classes.h1}>Arrow Speed Stats</h1>
-            <h2 id="transition-modal-title">
-              Velocity:{" "}
-              <span className={classes.span}>{props.feetPerSecond} fps</span>
-            </h2>
-            <h2>
-              Distance:{" "}
-              <span className={classes.span}>
-                {props.distanceTilTarget} yards
-              </span>
-            </h2>
-            <h2 id="transition-modal-description">
-              It takes{" "}
-              <span className={classes.span}>
-                {props.timeTilTarget} milliseconds
-              </span>{" "}
-              to reach the target.
-            </h2>
-          </div>
+          <Grid container className={classes.paper} spacing={4}>
+            <Box
+              color="primary.main"
+              fontSize={32}
+              textAlign="center"
+              mt={2}
+              mb={0}
+              mx="auto"
+              fontWeight="bold"
+              py={2}
+              px={2}
+              border={2}
+              borderColor="primary.light"
+            >
+              Arrow Speed Stats
+            </Box>
+            <Grid container item alignItems="center">
+              <Grid item>
+                <Box
+                  // id="transition-modal-title"
+                  fontSize={25}
+                  color="primary.main"
+                  pr={1}
+                  fontWeight="bold"
+                >
+                  Velocity:
+                </Box>
+              </Grid>
+              <Grid item>
+                <Box color="primary.light" fontSize={48} fontWeight={500}>
+                  {props.feetPerSecond} fps
+                </Box>
+              </Grid>
+            </Grid>
+            <Grid container item alignItems="center">
+              <Grid item>
+                <Box
+                  fontSize={25}
+                  fontWeight="bold"
+                  color="primary.main"
+                  pr={1}
+                >
+                  Distance:
+                </Box>
+              </Grid>
+              <Grid item>
+                <Box color="primary.light" fontSize={48} fontWeight={500}>
+                  {props.distanceTilTarget} yards
+                </Box>
+              </Grid>
+            </Grid>
+            <Grid
+              container
+              item
+              id="transition-modal-description"
+              alignItems="center"
+            >
+              <Grid item>
+                <Box
+                  fontSize={25}
+                  fontWeight="bold"
+                  color="primary.main"
+                  pr={1}
+                >
+                  It takes
+                </Box>
+                <Box color="primary.light" fontSize={48} fontWeight={500}>
+                  {props.timeTilTarget} milliseconds
+                </Box>
+                <Box fontSize={25} fontWeight="bold" color="primary.main">
+                  to reach the target
+                </Box>
+              </Grid>
+            </Grid>
+          </Grid>
         </Fade>
       </Modal>
     </div>
