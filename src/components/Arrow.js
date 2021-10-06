@@ -16,12 +16,12 @@ const useStyles = makeStyles({
   },
   "@keyframes arrowShoot": {
     "0%": { transform: "translateX(0%)" },
-    //width of 80px include in calculation 100% - 80px places the arrow at the end of the parent div after animation and translateX
-    "100%": { transform: "translateX(calc(100% - 120px))" },
+    //width of 68px for target and slight margin include in calculation 100% - 34px places the arrow at the end of the parent div after animation and translateX
+    "100%": { transform: "translateX(calc(100% - 34px))" },
   },
   arrowSVG: {
     fontSize: 80,
-    //width of 80px include in calculation 100% - 80px places the arrow at the end of the parent div after animation and translateX
+    //width of 68px for target and slight margin include in calculation 100% - 34px places the arrow at the end of the parent div after animation and translateX
     width: 80,
   },
 });
@@ -32,9 +32,8 @@ function ArrowComp(props) {
     <Grid
       container
       item
-      xs={12}
-      className={props.cycleAnimationClass ? null : classes.root}
       alignContent="center"
+      className={props.cycleAnimationClass ? null : classes.root}
     >
       <ArrowRightAlt className={classes.arrowSVG} />
     </Grid>
