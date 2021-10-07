@@ -21,7 +21,7 @@ import { StepperComp } from "./Stepper";
 
 const useStyles = makeStyles((theme) => ({
   muiOutlinedInput: {
-    background: theme.palette.secondary.main,
+    background: theme.palette.info.main,
     fontSize: "1.25rem",
   },
   muiFormHelperText: {
