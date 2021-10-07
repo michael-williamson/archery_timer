@@ -123,6 +123,8 @@ export const BowDemo = () => {
   useEffect(() => {
     const arrowImpactAudio = new Audio(arrowImpactURL);
     const applauseAudio = new Audio(applauseURL);
+    //turn down volume on applause audio
+    applauseAudio.volume = 0.15;
     if (!counter) {
       setActiveStep((prevStep) => prevStep + 1);
       setTimeout(() => {
