@@ -1,20 +1,29 @@
 import "./App.css";
 import { Container, Box } from "@material-ui/core";
 import { BowDemo } from "./components/BowDemo";
-import { Speed } from "@material-ui/icons";
+// import { Speed } from "@material-ui/icons";
+import speedometer from "./media/speedometer.png";
 
 function App() {
   return (
     <Container maxWidth="md" disableGutters={true}>
       <div className="App">
-        <div className="title">
+        <Box
+          py={2}
+          bgcolor="warning.main"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
           <Box fontSize={50} color="secondary.main">
             Archery Speed
           </Box>
-          <Box mt={2}>
-            <Speed fontSize="large" color="secondary" />
+          <Box ml={2}>
+            {/* <Speed fontSize="large" color="secondary" /> */}
+            <img src={speedometer} alt="speedometer" />
           </Box>
-        </div>
+        </Box>
+
         <BowDemo />
       </div>
     </Container>

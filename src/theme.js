@@ -18,6 +18,10 @@ const theme = createTheme({
     error: {
       main: red.A400,
     },
+    warning: {
+      //header bg
+      main: "#0000007a",
+    },
     info: {
       main: "#fff",
     },
