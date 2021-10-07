@@ -15,7 +15,7 @@ function App() {
           justifyContent="center"
           alignItems="center"
         >
-          <Box fontSize={50} color="secondary.main">
+          <Box fontSize={50} color="secondary.light" fontWeight={900}>
             Archery Speed
           </Box>
           <Box ml={2}>

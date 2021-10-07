@@ -14,6 +14,7 @@ const theme = createTheme({
     secondary: {
       //blanchedalmondalteration
       main: "#ffebcd",
+      light: "rgb(121 255 6)",
     },
     error: {
       main: red.A400,
