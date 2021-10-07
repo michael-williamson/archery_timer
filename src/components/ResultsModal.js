@@ -4,30 +4,34 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { Box, Grid } from "@material-ui/core";
+import targetImg from "../media/target.png";
+import { Close } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    maxWidth: 960,
+    margin: "0 auto",
   },
   paper: {
-    backgroundColor: "#000000f2",
-    // color: theme.palette.primary.main,
-    // border: "2px solid #000",
-    // boxShadow: theme.shadows[5],
-    // padding: theme.spacing(2, 4, 3),
+    backgroundColor: "#000000e0",
+    padding: theme.spacing(4, 2),
     width: "100%",
   },
-  span: {
-    // color: "#8dda20",
-    // fontSize: "3rem",
-    // marginLeft: ".75rem",
+  itemContainer: {
+    borderBottom: `1px solid ${theme.palette.primary.light}`,
   },
 }));
 
 export const ResultsModal = (props) => {
   const classes = useStyles();
+
+  const handleClick = () => {
+    props.setResultsModalOpen(false);
+  };
+
   return (
     <div>
       {" "}
@@ -45,6 +49,9 @@ export const ResultsModal = (props) => {
       >
         <Fade in={props.resultsModalOpen}>
           <Grid container className={classes.paper} spacing={4}>
+            <Box width={1} textAlign="left">
+              <Close color="primary" onClick={handleClick} />
+            </Box>
             <Box
               color="primary.main"
               fontSize={32}
@@ -60,7 +67,17 @@ export const ResultsModal = (props) => {
             >
               Arrow Speed Stats
             </Box>
-            <Grid container item alignItems="center">
+
+            <Box textAlign="center" width={1} pt={4}>
+              <img src={targetImg} alt="target" />
+            </Box>
+
+            <Grid
+              container
+              item
+              alignItems="center"
+              className={classes.itemContainer}
+            >
               <Grid item>
                 <Box
                   // id="transition-modal-title"
@@ -78,7 +95,12 @@ export const ResultsModal = (props) => {
                 </Box>
               </Grid>
             </Grid>
-            <Grid container item alignItems="center">
+            <Grid
+              container
+              item
+              alignItems="center"
+              className={classes.itemContainer}
+            >
               <Grid item>
                 <Box
                   fontSize={25}
@@ -100,6 +122,7 @@ export const ResultsModal = (props) => {
               item
               id="transition-modal-description"
               alignItems="center"
+              className={classes.itemContainer}
             >
               <Grid item>
                 <Box

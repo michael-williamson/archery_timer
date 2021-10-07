@@ -5,4 +5,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /*padding-right on body styles for some reason,  correcting issue here*/
+  padding: 0 !important;
 }

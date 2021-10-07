@@ -1,8 +1,17 @@
 import React from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
-import { Stepper, Step, StepLabel, StepConnector } from "@material-ui/core";
-import { CompareArrows, Done, DoubleArrow } from "@material-ui/icons";
+import {
+  Stepper,
+  Step,
+  StepLabel,
+  StepConnector,
+  Box,
+} from "@material-ui/core";
+// import { CompareArrows, Done, DoubleArrow } from "@material-ui/icons";
+import arrow from "../media/arrow_46.png";
+import archer from "../media/archer_46.png";
+import target from "../media/target_46.png";
 
 const useColorlibStepIconStyles = makeStyles((theme) => ({
   root: {
@@ -37,10 +46,27 @@ function ColorlibStepIcon(props) {
   const classes = useColorlibStepIconStyles();
   const { active, completed } = props;
 
+  // const icons = {
+  //   1: <CompareArrows/>,
+  //   2: <Done />,
+  //   3: <DoubleArrow />,
+  // };
   const icons = {
-    1: <CompareArrows />,
-    2: <Done />,
-    3: <DoubleArrow />,
+    1: (
+      <Box>
+        <img src={arrow} alt="arrow" />
+      </Box>
+    ),
+    2: (
+      <Box>
+        <img src={archer} alt="archer" />
+      </Box>
+    ),
+    3: (
+      <Box>
+        <img src={target} alt="target" />
+      </Box>
+    ),
   };
 
   return (
