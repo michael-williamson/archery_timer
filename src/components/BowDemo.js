@@ -37,10 +37,17 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 15,
     fontWeight: "bold",
     backgroundColor: "#000000c4",
+    opacity: 0,
+    transition: "opacity 300ms",
+    "&$error": {
+      opacity: 1,
+    },
   },
+  error: {},
   muiCountdownDisplay: {
     backgroundColor: "#000000a3",
     borderRadius: 9,
+    marginTop: 40,
   },
   muiStepperContainer: { padding: "40px 0" },
   muiCountdownText: {
@@ -55,9 +62,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 11,
   },
   muiArrowContainer: {
-    backgroundColor: "#fffcf970",
+    // backgroundColor: "#fffcf970",
     height: 200,
-    padding: 0,
+    padding: "10px 0 10px",
     marginTop: 40,
   },
   targetContainer: {
@@ -102,6 +109,12 @@ export const BowDemo = () => {
   const [distanceTilTarget, setDistanceTilTarget] = useState(20);
   const [resultsModalOpen, setResultsModalOpen] = useState(false);
   const [btnDisabled, setBtnDisabled] = useState(false);
+  const [whichInputError, setWhichInputError] = useState({
+    velocity: false,
+    distance: false,
+  });
+  const [velocityError, setVelocityError] = useState(false);
+  const [distanceError, setDistanceError] = useState(false);
   const [activeStep, setActiveStep] = useState(-1);
 
   const classes = useStyles();
@@ -137,7 +150,7 @@ export const BowDemo = () => {
         setResultsModalOpen(true);
         applauseAudio.play();
         setActiveStep(-1);
-        !cycleAnimationClass && setCycleAnimationClass(true);
+        cycleAnimationClass === false && setCycleAnimationClass(true);
       }, timeTilTarget + 2000);
     }
     counter > 0 &&
@@ -146,6 +159,7 @@ export const BowDemo = () => {
   }, [counter, showCounter, timeTilTarget, cycleAnimationClass]);
 
   const handleChange = (prop) => (event) => {
+    console.log(`event firing`, event);
     const timeTilTargetCalculator = (fps, distance) => {
       let val = (distance * 3) / fps;
       val = val * 1000;
@@ -153,15 +167,52 @@ export const BowDemo = () => {
       setTimeTilTarget(val);
     };
 
+    const velocityBool = minMaxValidationFn(50, 500, event.target.value);
+    const distanceBool = minMaxValidationFn(10, 300, event.target.value);
+
+    if ("fps" === prop) {
+      velocityBool
+        ? setWhichInputError((prev) => {
+            return { ...prev, velocity: true };
+          })
+        : setWhichInputError((prev) => {
+            return { ...prev, velocity: false };
+          });
+    } else {
+      distanceBool
+        ? setWhichInputError((prev) => {
+            return { ...prev, distance: true };
+          })
+        : setWhichInputError((prev) => {
+            return { ...prev, distance: false };
+          });
+    }
+
+    velocityBool === false && setVelocityError(false);
+    distanceBool === false && setDistanceError(false);
+
     "fps" === prop
       ? timeTilTargetCalculator(event.target.value, distanceTilTarget)
       : timeTilTargetCalculator(feetPerSecond, event.target.value);
     "fps" === prop
       ? setFeetPerSecond(parseInt(event.target.value))
       : setDistanceTilTarget(parseInt(event.target.value));
+    //end of handleChange fn////
   };
 
   const archeryDrawSequence = () => {
+    if (whichInputError.velocity && whichInputError.distance) {
+      setVelocityError(true);
+      setDistanceError(true);
+      return;
+    } else if (whichInputError.velocity) {
+      setVelocityError(true);
+      return;
+    } else if (whichInputError.distance) {
+      setDistanceError(true);
+      return;
+    }
+
     //disable button to prevent excess function calls that might complicate sequence
     setBtnDisabled(true);
     // created audio objects for each sound
@@ -180,7 +231,7 @@ export const BowDemo = () => {
   };
 
   return (
-    <Grid container item alignItems="center" direction="column" spacing={4}>
+    <Grid container item alignItems="center" direction="column">
       <Grid
         //container for both inputs
         container
@@ -193,21 +244,24 @@ export const BowDemo = () => {
               className={classes.muiOutlinedInput}
               value={feetPerSecond}
               type="number"
-              error={minMaxValidationFn(50, 500, feetPerSecond)}
+              required={true}
               onChange={handleChange("fps")}
               // aria-describedby="standard-speed-helper-text"
               endAdornment={
                 <InputAdornment position="end">feet per second</InputAdornment>
               }
-              inputProps={{ "aria-label": "Velocity" }}
+              inputProps={{
+                "aria-label": "Velocity",
+              }}
             />
             <FormHelperText
-              error={minMaxValidationFn(50, 500, feetPerSecond)}
-              classes={{ root: classes.muiFormErrorText }}
+              error={velocityError}
+              classes={{
+                root: classes.muiFormErrorText,
+                error: classes.error,
+              }}
             >
-              {minMaxValidationFn(50, 500, feetPerSecond)
-                ? `Entry must be between 50 and 500`
-                : ""}
+              {velocityError ? `Entry must be between 50 and 500` : ""}
             </FormHelperText>
             <FormHelperText
               id="standard-velocity-helper-text"
@@ -223,7 +277,6 @@ export const BowDemo = () => {
               className={classes.muiOutlinedInput}
               value={distanceTilTarget}
               type="number"
-              error={minMaxValidationFn(10, 300, distanceTilTarget)}
               onChange={handleChange("yards")}
               endAdornment={
                 <InputAdornment position="end">yards</InputAdornment>
@@ -231,12 +284,13 @@ export const BowDemo = () => {
               inputProps={{ "aria-label": "Distance" }}
             />
             <FormHelperText
-              error={minMaxValidationFn(10, 300, distanceTilTarget)}
-              classes={{ root: classes.muiFormErrorText }}
+              error={distanceError}
+              classes={{
+                root: classes.muiFormErrorText,
+                error: classes.error,
+              }}
             >
-              {minMaxValidationFn(10, 300, distanceTilTarget)
-                ? `Entry must be between 10 and 300`
-                : ""}
+              {distanceError ? `Entry must be between 10 and 300` : ""}
             </FormHelperText>
             <FormHelperText
               id="standard-distance-helper-text"
@@ -271,7 +325,7 @@ export const BowDemo = () => {
         <Grid item xs={12} className={classes.muiStepperContainer}>
           <StepperComp activeStep={activeStep} />
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={4}>
           {counter > -1 && showCounter ? (
             <Typography
               variant="h3"

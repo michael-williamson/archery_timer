@@ -7,7 +7,7 @@ const useStyles = makeStyles({
   root: {
     animationName: `$arrowShoot`,
     animationFillMode: "forwards",
-    animationDuration: (props) => `${props.timeTilTarget}ms`,
+    animationDuration: (props) => `${props.timeTilTarget || 1000}ms`,
     animationPlayState: (props) => props.animationPlayState,
     animationTimingFunction: "linear",
     animationIterationCount: 1,
